@@ -35,8 +35,8 @@ class GetTuna extends Component{
             })
             .then((res) => res.json())
             .then(data =>{
-                var query = JSON.parse(data.query);
                 if(data.code == 200){
+                    var query = JSON.parse(data.query);
                     swal.fire("Details Retrieved","","success");
                     this.setState({
                         holder: query.holder,
