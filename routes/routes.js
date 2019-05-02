@@ -1,0 +1,11 @@
+const express = require('express');
+const router = express.Router();
+const Usercontrollers = require('../controllers/controller.js');
+const { catchErrors } = require('../errorhandlers');
+router.post('/AddTuna',catchErrors(Usercontrollers.AddTuna));
+router.post('/GetTuna',catchErrors(Usercontrollers.GetTuna));
+router.get('/QueryTuna',catchErrors(Usercontrollers.QueryTuna));
+router.post('/ChangeHolder',catchErrors(Usercontrollers.ChangeHolder));
+router.get('/RegisterAdmin',catchErrors(Usercontrollers.RegisterAdmin));
+router.get('/RegisterUser',catchErrors(Usercontrollers.RegisterUser));
+module.exports = router ;
