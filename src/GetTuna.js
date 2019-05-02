@@ -35,14 +35,22 @@ class GetTuna extends Component{
             })
             .then((res) => res.json())
             .then(data =>{
-                // console.log(data)
-                swal.fire("Details Retrieved","","success");
-                this.setState({
-                    holder: data.holder,
-                    location : data.location,
-                    timestamp : data.timestamp,
-                    vessel :data.vessel
-                })
+                var query = JSON.parse(data.query);
+                if(data.code == 200){
+                    swal.fire("Details Retrieved","","success");
+                    this.setState({
+                        holder: query.holder,
+                        location : query.location,
+                        timestamp : query.timestamp,
+                        vessel :query.vessel
+                    })
+                }
+                else if(data.code == 400 || data.code == 401){
+                    swal.fire("No Details Found","","error");
+                }
+                else if (data.code == 500){
+                    swal.fire("Network Error","","error");
+                }
             })
         }
         catch(error){

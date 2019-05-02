@@ -8,11 +8,12 @@ class AddTuna extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			key :'11',
-			timestamp:'48032189',
-			location:'123.7789',
-			vessel:'20ELFSA',
-			holder:'Hansel'
+			key :'',
+			timestamp:'',
+			location:'',
+			vessel:'',
+			holder:'',
+			txId:''
 		}
 		this.onKey = this.onKey.bind(this);
 		this.onTimestamp = this.onTimestamp.bind(this);
@@ -57,7 +58,15 @@ class AddTuna extends Component{
 			.then((res) => res.json())
 			.then(data =>{
 				console.log(data);
-				swal.fire("Added","","success");
+				if(data.code ==200 || data.code == 201){
+					swal.fire("Added","","success");
+					this.setState({
+						txId: data.success
+					})
+				}
+				else if(data.code==400){
+					swal.fire("Error In Processing","","error");
+				}
 			})
 		}
 		catch(error){
@@ -86,7 +95,11 @@ class AddTuna extends Component{
 			<input type ="text" value={this.state.holder} onChange={this.onHolder}/>
 			<br/><br/>
 			<Button onClick={this.onAdd}>Add</Button>
+			<br/>
+			<p>Transaction Id: {this.state.txId} </p>
+			<br/>
 			<div align="right"><Button onClick={()=>this.props.history.push("/")}>Home</Button></div>
+			<br/>
 			</div>
 		);
 	}

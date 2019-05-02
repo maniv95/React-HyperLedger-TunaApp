@@ -18,18 +18,23 @@ class QueryTuna extends Component{
             .then((res)=> res.json())
             .then(data =>{
                 // console.log(data);
-                var array = [];
-                for (var i = 0; i < data.length; i++){
-                    parseInt(data[i].Key);
-                    data[i].Record.Key = parseInt(data[i].Key);
-                    array.push(data[i].Record);
+                if(data.code ==200){
+                    var array = [];
+                    for (var i = 0; i < data.query.length; i++){
+                        parseInt(data.query[i].Key);
+                        data.query[i].Record.Key = parseInt(data.query[i].Key);
+                        array.push(data.query[i].Record);
+                    }
+                    array.sort(function(a, b) {
+                        return parseFloat(a.Key) - parseFloat(b.Key);
+                    });
+                    // console.log(JSON.stringify(array));
+                    this.setState({data: array})
+                    swal.fire("Details Retrieved","","success");
                 }
-                array.sort(function(a, b) {
-                    return parseFloat(a.Key) - parseFloat(b.Key);
-                });
-                // console.log(JSON.stringify(array));
-                this.setState({data: array})
-                swal.fire("Details Retrieved","","success");
+                else if(data.code ==201 || data.code ==400){
+                    swal.fire("Error In Fetching Details","","error");
+                }
             })
         }
         catch(error){

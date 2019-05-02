@@ -9,7 +9,8 @@ class ChangeHolder extends Component {
         super(props);
         this.state = {
             key:'',
-            Holder:''
+            Holder:'',
+            txId:''
         }
         this.onKey = this.onKey.bind(this);
         this.onHolder = this.onHolder.bind(this);
@@ -38,7 +39,18 @@ class ChangeHolder extends Component {
             .then((res) => res.json())
             .then(data =>{
                 console.log(data);
-                swal.fire("Updated Holder","","success");
+                if(data.code ==200){
+                    swal.fire("Updated Holder","","success");
+                    this.setState({
+                        txId:data.success
+                    })   
+                }
+                else if(data.code ==400 || data.code ==301){
+                    swal.fire("No Details Found","","error");
+                }
+                else{
+                    swal.fire("Network Error","","error");
+                }
             })
         }
         catch(error){
@@ -58,6 +70,9 @@ class ChangeHolder extends Component {
             <input type ="text" value={this.state.holder} onChange={this.onHolder}/>
             <br/><br/>
             <Button onClick={this.onChangeHolder}>ChangeHolder</Button>
+            <br/>
+            <p>Transaction Id: {this.state.txId} </p>
+            <br/>
             <div align="right"><Button onClick={()=>this.props.history.push("/")}>Home</Button></div>
             </div>
         );
