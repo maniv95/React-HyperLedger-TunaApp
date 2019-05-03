@@ -18,8 +18,21 @@ class RegisterUser extends Component{
             fetch('http://localhost:8080/api/RegisterUser')
             .then((res)=>res.json())
             .then(data => {
-                console.log(data);
-                swal.fire("Registered User","","success");
+                console.log(data)
+                if(data.code==200){
+                    swal.fire("Registered User","","success");
+                    this.props.history.push('/');
+                }
+                else if(data.code==301){
+                    swal.fire("Already Registered","Loaded From Persistance","success");
+                    this.props.history.push('/');
+                }
+                else if(data.code ==400){
+                    swal.fire("Register User Failed","","error");
+                }
+                else{
+                    swal.fire("Network Error","","error");
+                }
             })
         }
         catch(error){
