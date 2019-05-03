@@ -27,8 +27,21 @@ class RegisterAdmin extends Component{
             fetch("http://localhost:8080/api/RegisterAdmin")
             .then((res)=>res.json())
             .then(data => {
-                swal.fire("Registered Admin","","success");
-                console.log(data);
+                console.log(data)
+                if(data.code==200){
+                    swal.fire("Registered Admin","","success");
+                    this.props.history.push('/');
+                }
+                else if(data.code==301){
+                    swal.fire("Already Registered","Loaded From Persistance","success");
+                    this.props.history.push('/');
+                }
+                else if(data.code ==400){
+                    swal.fire("Register Admin Failed","","error");
+                }
+                else{
+                    swal.fire("Network Error","","error");
+                }
             })
         }
         catch(error){
