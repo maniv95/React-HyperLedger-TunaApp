@@ -84,9 +84,11 @@ class AddTuna extends Component{
 	render(){
 		return(
 			<div className="App" align="center">
+			<br/>
 			<header className="App-header">
-            <h3>Add Details</h3>
-            </header>
+			<div align="center"><Button onClick={()=>this.props.history.push("/HomePage")}>Home</Button></div>
+			<h3>Add Details</h3>
+			</header>
 			<label>Key</label><br/>
 			<input type ="number" value={this.state.key} onChange={this.onKey}/>
 			<br/>
@@ -105,8 +107,6 @@ class AddTuna extends Component{
 			<Button onClick={this.onAdd}>Add</Button>
 			<br/>
 			<p>Transaction Id: {this.state.txId} </p>
-			<br/>
-			<div align="right"><Button onClick={()=>this.props.history.push("/HomePage")}>Home</Button></div>
 			<br/>
 			</div>
 		);
