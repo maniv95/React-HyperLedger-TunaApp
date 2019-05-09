@@ -66,7 +66,9 @@ class GetTuna extends Component{
     render(){
         return(
             <div className="App" align="center">
+            <br/>
             <header className="App-header">
+            <div align="center"><Button onClick={()=>this.props.history.push("/HomePage")}>Home</Button></div>
             <h3>Get Details By ID </h3>
             </header>
             <label>Key</label><br/>
@@ -94,7 +96,6 @@ class GetTuna extends Component{
                 </tr>
             </tbody>
             </Table>
-            <div align="right"><Button onClick={()=>this.props.history.push("/HomePage")}>Home</Button></div>
             </div>
         );
     }
