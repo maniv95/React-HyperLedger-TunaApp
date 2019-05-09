@@ -559,7 +559,12 @@ exports.UserLogin = async (req,res) => {
             var crypto_store = Fabric_Client.newCryptoKeyStore({path: store_path});
             crypto_suite.setCryptoKeyStore(crypto_store);
             fabric_client.setCryptoSuite(crypto_suite);
-            return fabric_client.getUserContext(user, true);
+            if(user !='' && fabric_client.getUserContext(user,true)){
+                return fabric_client.getUserContext(user, true);
+            }
+            else{
+                res.send({code:202});
+            }
             }).then((user_from_store) => {
                 // console.log(user_from_store._name);
                 if (user_from_store && user_from_store.isEnrolled()) {
