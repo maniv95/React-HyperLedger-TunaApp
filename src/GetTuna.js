@@ -12,7 +12,7 @@ class GetTuna extends Component{
             location:'',
             holder:'',
             timestamp:'',
-            vessel:''
+            vessel:'',
         }
         this.onKey = this.onKey.bind(this);
         this.onGet = this.onGet.bind(this);
@@ -24,6 +24,8 @@ class GetTuna extends Component{
         try{
             let formBody =[]
             formBody.push("key="+encodeURIComponent(this.state.key));
+            formBody.push("user="+encodeURIComponent(localStorage.getItem('user')));
+            formBody = formBody.join("&");
             fetch("http://localhost:8080/api/GetTuna",{
                 method:'post',
                 headers: {
@@ -35,8 +37,8 @@ class GetTuna extends Component{
             })
             .then((res) => res.json())
             .then(data =>{
-                var query = JSON.parse(data.query);
                 if(data.code == 200){
+                    var query = JSON.parse(data.query);
                     swal.fire("Details Retrieved","","success");
                     this.setState({
                         holder: query.holder,
@@ -44,6 +46,10 @@ class GetTuna extends Component{
                         timestamp : query.timestamp,
                         vessel :query.vessel
                     })
+                }
+                else if(data.code==202){
+                    swal.fire("Please Login","","error");
+                    this.props.history.push('/UserLogin');
                 }
                 else if(data.code == 400 || data.code == 401){
                     swal.fire("No Details Found","","error");
@@ -65,7 +71,7 @@ class GetTuna extends Component{
             </header>
             <label>Key</label><br/>
             <input type="number" value={this.state.key} onChange={this.onKey} />
-            <br/>
+            <br/><br/>
             <Button onClick={this.onGet}>Get</Button>
             <p>Details</p>
             <Table align="center" border="1">
@@ -88,7 +94,7 @@ class GetTuna extends Component{
                 </tr>
             </tbody>
             </Table>
-            <div align="right"><Button onClick={()=>this.props.history.push("/")}>Home</Button></div>
+            <div align="right"><Button onClick={()=>this.props.history.push("/HomePage")}>Home</Button></div>
             </div>
         );
     }

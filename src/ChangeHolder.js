@@ -10,7 +10,8 @@ class ChangeHolder extends Component {
         this.state = {
             key:'',
             Holder:'',
-            txId:''
+            txId:'',
+            user:''
         }
         this.onKey = this.onKey.bind(this);
         this.onHolder = this.onHolder.bind(this);
@@ -27,6 +28,7 @@ class ChangeHolder extends Component {
             let formBody = []
             formBody.push("key="+encodeURIComponent(this.state.key));
             formBody.push("holder="+encodeURIComponent(this.state.Holder));
+            formBody.push("user="+encodeURIComponent(localStorage.getItem('user')));
             formBody = formBody.join("&");
             fetch("http://localhost:8080/api/ChangeHolder",{
                 method: "post",
@@ -45,6 +47,10 @@ class ChangeHolder extends Component {
                         txId:data.success
                     })   
                 }
+                else if(data.code==202){
+                    swal.fire("Please Login","","error");
+                    this.props.history.push('/UserLogin');
+                }
                 else if(data.code ==400 || data.code ==301){
                     swal.fire("No Details Found","","error");
                 }
@@ -61,6 +67,7 @@ class ChangeHolder extends Component {
         return(
             <div className="App" align="center">
             <header className="App-Header">
+            <div align="center"><Button onClick={()=>this.props.history.push("/HomePage")}>Home</Button></div>
             <h3>Change Holder</h3>
             </header>
             <label>Key</label><br/>
@@ -68,12 +75,12 @@ class ChangeHolder extends Component {
             <br/>
             <label>Holder</label><br/>
             <input type ="text" value={this.state.holder} onChange={this.onHolder}/>
-            <br/><br/>
+            <br/>
+            <br/>
             <Button onClick={this.onChangeHolder}>ChangeHolder</Button>
             <br/>
             <p>Transaction Id: {this.state.txId} </p>
             <br/>
-            <div align="right"><Button onClick={()=>this.props.history.push("/")}>Home</Button></div>
             </div>
         );
     }

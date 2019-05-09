@@ -16,10 +16,7 @@ class LandingPage extends Component{
              </div>
              <div><Button onClick={()=>this.props.history.push('/RegisterAdmin')}>Register Admin</Button></div><br/>
              <div><Button onClick={()=>this.props.history.push('/RegisterUser')}>Register User</Button></div><br/>
-             <div><Button onClick={()=>this.props.history.push('/AddTuna')}>Add</Button></div><br/>
-             <div><Button onClick={()=>this.props.history.push('/GetTuna')}>Get By Id</Button></div><br/>
-             <div><Button onClick={()=>this.props.history.push('/QueryTuna')}>QueryAll</Button></div><br/>
-             <div><Button onClick={()=>this.props.history.push('/ChangeHolder')}>Change Holder</Button></div><br/>
+             <div><Button onClick={()=>this.props.history.push('/UserLogin')}>Login as User</Button></div><br/>
             </CardBody>
             </Card>
             </div>

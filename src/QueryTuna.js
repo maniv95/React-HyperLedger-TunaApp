@@ -8,13 +8,28 @@ class QueryTuna extends Component{
     constructor(props){
         super(props);
         this.state = {
-            data :[]
+            data :[],
+            // user:''
         }
         this.onQuery = this.onQuery.bind(this);
     }
+    componentDidMount(){
+        this.onQuery();
+        // setInterval(this.onQuery,60000);
+    }
     onQuery () {
         try{
-            fetch('http://localhost:8080/api/QueryTuna')
+            let formBody = []
+            formBody.push("user="+encodeURIComponent(localStorage.getItem('user')));
+            fetch('http://localhost:8080/api/QueryTuna',{
+                method:'post',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Accept-Charset': 'utf-8'
+                },
+                body: formBody
+            })
             .then((res)=> res.json())
             .then(data =>{
                 // console.log(data);
@@ -31,6 +46,10 @@ class QueryTuna extends Component{
                     // console.log(JSON.stringify(array));
                     this.setState({data: array})
                     swal.fire("Details Retrieved","","success");
+                }
+                else if(data.code==202){
+                    swal.fire("Please Login","","error");
+                    this.props.history.push('/UserLogin');
                 }
                 else if(data.code ==201 || data.code ==400){
                     swal.fire("Error In Fetching Details","","error");
@@ -73,14 +92,13 @@ class QueryTuna extends Component{
                     })
         return( 
             <div className="App" align="center">
+            <br/>
             <header className="App-Header">
+            <div align="center"><Button onClick={()=>this.props.history.push("/HomePage")}>Home</Button></div>
             <h3>Details of All Tuna(s)</h3>
             </header>
-                <div>
-                    <Button onClick={this.onQuery}>Query</Button>
-                </div>
-                <div>{TableData}</div>
-                <div align="right"><Button onClick={()=>this.props.history.push("/")}>Home</Button></div>
+            <br/>
+            <div>{TableData}</div>
             </div>
         );
     }

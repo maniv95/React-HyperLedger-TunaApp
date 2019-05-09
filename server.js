@@ -16,6 +16,12 @@ app.use(bodyParser.urlencoded({limit:"10mb", extended:true, parameterLimit:500})
 app.use(cors())
 app.use('/api/',routes.routes);
 
+app.use(function(req, res, next) {
+  // res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 var port = process.env.PORT || 8080;
 app.listen(port,function(){
   console.log("Server Live on port: " + port);

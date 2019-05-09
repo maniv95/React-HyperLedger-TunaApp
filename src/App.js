@@ -10,6 +10,8 @@ import LandingPage from './LandingPage';
 import RegAdmin from './RegisterAdmin';
 import RegUser from './RegisterUser'
 import history from './history';
+import UserLogin from './UserLogin';
+import HomePage from './Homepage';
 const all = () => (
   <div>
   <LandingPage/>
@@ -45,6 +47,16 @@ const reguser = () => (
   <RegUser/>
   </div>
 )
+const userlogin =() => (
+  <div>
+  <UserLogin/>
+  </div>
+)
+const homepage = () => (
+  <div>
+  <HomePage/>
+  </div>
+)
 class App extends Component {
   render() {
     return ( 
@@ -52,6 +64,8 @@ class App extends Component {
         <Route exact path ="/" component ={all} />
         <Route  path = "/RegisterAdmin" component = {regadmin} />
         <Route  path = "/RegisterUser"  component = {reguser} />
+        <Route  path = "/UserLogin"  component = {userlogin} />
+        <Route  path = "/HomePage"   component = {homepage} />
         <Route  path = "/AddTuna"    component = {addTuna} />  
         <Route  path = "/GetTuna"    component = {getTuna} />
         <Route  path = "/QueryTuna"  component = {queryTuna} />

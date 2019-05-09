@@ -1,6 +1,6 @@
 /*eslint-disable*/
 import React,{Component} from 'react';
-import {Button} from 'reactstrap';
+import {Button,Card,CardBody} from 'reactstrap';
 import { withRouter } from 'react-router';
 import history from './history';
 import swal from 'sweetalert2';
@@ -45,6 +45,7 @@ class AddTuna extends Component{
 			formBody.push("location="+encodeURIComponent(this.state.location));
 			formBody.push("vessel="+encodeURIComponent(this.state.vessel));
 			formBody.push("holder="+encodeURIComponent(this.state.holder));
+			formBody.push("user="+encodeURIComponent(localStorage.getItem('user')));
 			formBody = formBody.join("&");
 			fetch('http://localhost:8080/api/AddTuna',{
 				method:'post',
@@ -64,8 +65,15 @@ class AddTuna extends Component{
 						txId: data.success
 					})
 				}
+				else if(data.code==202){
+					swal.fire("Please Login","","error");
+					this.props.history.push('/UserLogin');
+				}
 				else if(data.code==400){
 					swal.fire("Error In Processing","","error");
+				}
+				else{
+					swal.fire("Network Error","","error");
 				}
 			})
 		}
@@ -98,7 +106,7 @@ class AddTuna extends Component{
 			<br/>
 			<p>Transaction Id: {this.state.txId} </p>
 			<br/>
-			<div align="right"><Button onClick={()=>this.props.history.push("/")}>Home</Button></div>
+			<div align="right"><Button onClick={()=>this.props.history.push("/HomePage")}>Home</Button></div>
 			<br/>
 			</div>
 		);
