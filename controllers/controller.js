@@ -418,7 +418,11 @@ exports.RegisterAdmin = async (req,res) => {
         }).then((user_from_store) => {
             // console.log("user from store",user_from_store);
             if (user_from_store && user_from_store.isEnrolled()) {
+<<<<<<< HEAD
                 console.log('----------Successfully loaded admin from persistence------------');
+=======
+                console.log('Successfully loaded admin from persistence');
+>>>>>>> c0122ac7ed33414e97a9aa139eba4e72a8f0dc53
                 res.send({code:301,"success":"Successfully loaded admin from persistence"});
                 admin_user = user_from_store;
                 return null;
@@ -428,7 +432,11 @@ exports.RegisterAdmin = async (req,res) => {
               enrollmentSecret: adminpw
             }).then((enrollment) => {
                 // console.log("enrollment",enrollment);
+<<<<<<< HEAD
                  console.log('------------------Successfully enrolled admin user  -----------',admin ,"-----------------------");
+=======
+                 console.log('Successfully enrolled admin user "admin"');
+>>>>>>> c0122ac7ed33414e97a9aa139eba4e72a8f0dc53
                  res.send({code:200,"success":"Admin Enrolled"});
                  return fabric_client.createUser(
                       {username: admin,
@@ -497,7 +505,11 @@ exports.RegisterUser = async (req,res) => {
                     console.log('Successfully registered user:'+user,'secret:'+ secret);
                    return fabric_ca_client.enroll({enrollmentID: user, enrollmentSecret: secret});
                 }).then((enrollment) => {
+<<<<<<< HEAD
                   console.log('Successfully enrolled member user ',user);
+=======
+                  console.log('Successfully enrolled member user "user1" ');
+>>>>>>> c0122ac7ed33414e97a9aa139eba4e72a8f0dc53
                   res.send({code:200,"success":"User Enrolled"});
                   return fabric_client.createUser(
                      {username: user,
@@ -523,6 +535,7 @@ exports.RegisterUser = async (req,res) => {
         console.log(error);
     }
 }
+<<<<<<< HEAD
 
 exports.UserLogin = async (req,res) => {
     try{
@@ -564,3 +577,5 @@ exports.UserLogin = async (req,res) => {
         console.log(error);
     }
 }
+=======
+>>>>>>> c0122ac7ed33414e97a9aa139eba4e72a8f0dc53
