@@ -37,7 +37,7 @@ class UserLogin extends Component{
                 if(data.code ==200){
                     sessionStorage.setItem('user',data.user);
                     sessionStorage.setItem('loggedin',true);
-                    swal.fire("Logged in As User","","success");
+                    swal.fire("Logged in As: " + data.user + "","","success");
                     this.props.history.push('/HomePage');
                 }
                 else if(data.code==202){
