@@ -41,7 +41,7 @@ class ChangeHolder extends Component {
             let formBody = []
             formBody.push("key="+encodeURIComponent(this.state.key));
             formBody.push("holder="+encodeURIComponent(this.state.Holder));
-            formBody.push("user="+encodeURIComponent(localStorage.getItem('user')));
+            formBody.push("user="+encodeURIComponent(sessionStorage.getItem('user')));
             formBody = formBody.join("&");
             fetch("http://localhost:8080/api/ChangeHolder",{
                 method: "post",
