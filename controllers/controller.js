@@ -40,10 +40,11 @@ exports.AddTuna = async (req,res) => {
                 if (user_from_store && user_from_store.isEnrolled()) {
                     console.log('Successfully loaded :',user,'from persistence');
                     member_user = user_from_store;
-                } else if(user_from_store !=''){
-                    console.log("user empty");
-                    res.send({code:202,"error":"user empty"});
-                }
+                } 
+                // else if(user_from_store !=''){
+                //     console.log("user empty");
+                //     res.send({code:202,"error":"user empty"});
+                // }
                 else {
                     throw new Error('Failed to get', user,'....registerUser');
                 }
@@ -163,9 +164,9 @@ exports.GetTuna = async(req,res) => {
                     console.log('Successfully loaded user1 from persistence');
                     member_user = user_from_store;
                 } 
-                else if(user_from_store !=''){
-                    res.send({code:202,"error":"user empty"})
-                }
+                // else if(user_from_store !=''){
+                //     res.send({code:202,"error":"user empty"})
+                // }
                 else {
                     throw new Error('Failed to get user1.... run registerUser.js');
                 }
@@ -225,9 +226,9 @@ exports.QueryTuna = async (req,res) => {
                     console.log('Successfully loaded user1 from persistence');
                     member_user = user_from_store;
                 } 
-                else if(user_from_store !=''){
-                    res.send({code:202,"error":"user empty"})
-                }
+                // else if(user_from_store !=''){
+                //     res.send({code:202,"error":"user empty"})
+                // }
                 else {
                     throw new Error('Failed to get user1.... run registerUser.js');
                 }
@@ -291,9 +292,9 @@ exports.ChangeHolder = async (req,res) => {
                     console.log('Successfully loaded',user,'from persistence');
                     member_user = user_from_store;
                 }
-                else if(user_from_store !=''){
-                    res.send({code:202,"error":"user empty"})
-                } 
+                // else if(user_from_store !=''){
+                //     res.send({code:202,"error":"user empty"})
+                // } 
                 else {
                     throw new Error('Failed to get ',user,'....registerUser');
                 }
@@ -418,11 +419,7 @@ exports.RegisterAdmin = async (req,res) => {
         }).then((user_from_store) => {
             // console.log("user from store",user_from_store);
             if (user_from_store && user_from_store.isEnrolled()) {
-<<<<<<< HEAD
                 console.log('----------Successfully loaded admin from persistence------------');
-=======
-                console.log('Successfully loaded admin from persistence');
->>>>>>> c0122ac7ed33414e97a9aa139eba4e72a8f0dc53
                 res.send({code:301,"success":"Successfully loaded admin from persistence"});
                 admin_user = user_from_store;
                 return null;
@@ -432,11 +429,7 @@ exports.RegisterAdmin = async (req,res) => {
               enrollmentSecret: adminpw
             }).then((enrollment) => {
                 // console.log("enrollment",enrollment);
-<<<<<<< HEAD
                  console.log('------------------Successfully enrolled admin user  -----------',admin ,"-----------------------");
-=======
-                 console.log('Successfully enrolled admin user "admin"');
->>>>>>> c0122ac7ed33414e97a9aa139eba4e72a8f0dc53
                  res.send({code:200,"success":"Admin Enrolled"});
                  return fabric_client.createUser(
                       {username: admin,
@@ -505,11 +498,7 @@ exports.RegisterUser = async (req,res) => {
                     console.log('Successfully registered user:'+user,'secret:'+ secret);
                    return fabric_ca_client.enroll({enrollmentID: user, enrollmentSecret: secret});
                 }).then((enrollment) => {
-<<<<<<< HEAD
                   console.log('Successfully enrolled member user ',user);
-=======
-                  console.log('Successfully enrolled member user "user1" ');
->>>>>>> c0122ac7ed33414e97a9aa139eba4e72a8f0dc53
                   res.send({code:200,"success":"User Enrolled"});
                   return fabric_client.createUser(
                      {username: user,
@@ -535,7 +524,6 @@ exports.RegisterUser = async (req,res) => {
         console.log(error);
     }
 }
-<<<<<<< HEAD
 
 exports.UserLogin = async (req,res) => {
     try{
@@ -552,30 +540,32 @@ exports.UserLogin = async (req,res) => {
         var store_path = path.join(os.homedir(), '.hfc-key-store');
         console.log('Store path:'+store_path);
         var tx_id = null;
-        Fabric_Client.newDefaultKeyValueStore({ path: store_path
-        }).then((state_store) => {
-            fabric_client.setStateStore(state_store);
-            var crypto_suite = Fabric_Client.newCryptoSuite();
-            var crypto_store = Fabric_Client.newCryptoKeyStore({path: store_path});
-            crypto_suite.setCryptoKeyStore(crypto_store);
-            fabric_client.setCryptoSuite(crypto_suite);
-            return fabric_client.getUserContext(user, true);
+        if(user!=''){
+            Fabric_Client.newDefaultKeyValueStore({ path: store_path
+            }).then((state_store) => {
+                fabric_client.setStateStore(state_store);
+                var crypto_suite = Fabric_Client.newCryptoSuite();
+                var crypto_store = Fabric_Client.newCryptoKeyStore({path: store_path});
+                crypto_suite.setCryptoKeyStore(crypto_store);
+                fabric_client.setCryptoSuite(crypto_suite);
+                return fabric_client.getUserContext(user, true);
             }).then((user_from_store) => {
-                // console.log(user_from_store._name);
                 if (user_from_store && user_from_store.isEnrolled()) {
                     console.log('Successfully loaded :',user,'from persistence');
                     member_user = user_from_store;
                     res.send({code:200,"user":user_from_store._name});
                 }
                 else {
-                    throw new Error('Failed to get', user,'....registerUser');
+                    throw new Error('Failed to get', user,'No User');
                     res.send({code:400});
                 }
             })
+        }
+        else{
+            res.send({code:202});
+        }
     }
     catch(error){
         console.log(error);
     }
 }
-=======
->>>>>>> c0122ac7ed33414e97a9aa139eba4e72a8f0dc53
