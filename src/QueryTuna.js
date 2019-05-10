@@ -14,13 +14,22 @@ class QueryTuna extends Component{
         this.onQuery = this.onQuery.bind(this);
     }
     componentDidMount(){
+        // this.onCheck();
         this.onQuery();
-        // setInterval(this.onQuery,60000);
     }
+    // onCheck(){
+    //     if(sessionStorage.getItem('loggedin')){
+    //         console.log("session logged in");
+    //     }
+    //     else{
+    //         swal.fire("Please Login","","error");
+    //         this.props.history.push('/UserLogin');
+    //     }
+    // }
     onQuery () {
         try{
             let formBody = []
-            formBody.push("user="+encodeURIComponent(localStorage.getItem('user')));
+            formBody.push("user="+encodeURIComponent(sessionStorage.getItem('user')));
             fetch('http://localhost:8080/api/QueryTuna',{
                 method:'post',
                 headers: {

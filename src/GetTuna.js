@@ -16,15 +16,28 @@ class GetTuna extends Component{
         }
         this.onKey = this.onKey.bind(this);
         this.onGet = this.onGet.bind(this);
+        this.onCheck = this.onCheck.bind(this);
     }
     onKey(a){
         this.setState({key:a.target.value});
+    }
+    componentDidMount(){
+        this.onCheck();
+    }
+    onCheck(){
+        if(sessionStorage.getItem('loggedin')){
+            console.log("session logged in");
+        }
+        else{
+            swal.fire("Please Login","","error");
+            this.props.history.push('/UserLogin');
+        }
     }
     onGet() {
         try{
             let formBody =[]
             formBody.push("key="+encodeURIComponent(this.state.key));
-            formBody.push("user="+encodeURIComponent(localStorage.getItem('user')));
+            formBody.push("user="+encodeURIComponent(sessionStorage.getItem('user')));
             formBody = formBody.join("&");
             fetch("http://localhost:8080/api/GetTuna",{
                 method:'post',

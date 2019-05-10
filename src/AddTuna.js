@@ -21,6 +21,7 @@ class AddTuna extends Component{
 		this.onVessel = this.onVessel.bind(this);
 		this.onHolder = this.onHolder.bind(this);
 		this.onAdd = this.onAdd.bind(this);
+		this.onCheck = this.onCheck.bind(this);
 	}
 	onKey(a){
 		this.setState({key:a.target.value})
@@ -37,6 +38,18 @@ class AddTuna extends Component{
 	onHolder(e){
 		this.setState({holder:e.target.value})
 	}
+	componentDidMount(){
+		this.onCheck();
+	}
+	onCheck(){
+		if(sessionStorage.getItem('loggedin')){
+			console.log("session logged in");
+		}
+		else{
+			swal.fire("Please Login","","error");
+			this.props.history.push('/UserLogin');
+		}
+	}
 	onAdd(){
 		try{
 			let formBody = []
@@ -45,7 +58,7 @@ class AddTuna extends Component{
 			formBody.push("location="+encodeURIComponent(this.state.location));
 			formBody.push("vessel="+encodeURIComponent(this.state.vessel));
 			formBody.push("holder="+encodeURIComponent(this.state.holder));
-			formBody.push("user="+encodeURIComponent(localStorage.getItem('user')));
+			formBody.push("user="+encodeURIComponent(sessionStorage.getItem('user')));
 			formBody = formBody.join("&");
 			fetch('http://localhost:8080/api/AddTuna',{
 				method:'post',
@@ -75,6 +88,7 @@ class AddTuna extends Component{
 				else{
 					swal.fire("Network Error","","error");
 				}
+
 			})
 		}
 		catch(error){
@@ -87,8 +101,8 @@ class AddTuna extends Component{
 			<br/>
 			<header className="App-header">
 			<div align="center"><Button onClick={()=>this.props.history.push("/HomePage")}>Home</Button></div>
-			<h3>Add Details</h3>
-			</header>
+            <h3>Add Details</h3>
+            </header>
 			<label>Key</label><br/>
 			<input type ="number" value={this.state.key} onChange={this.onKey}/>
 			<br/>

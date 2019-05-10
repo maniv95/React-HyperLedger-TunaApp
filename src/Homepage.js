@@ -11,7 +11,10 @@ class HomePage extends Component{
     }
     onLogout(){
         try{
-            localStorage.removeItem('user');
+            sessionStorage.removeItem('user');
+            localStorage.clear();
+            sessionStorage.removeItem('loggedin');
+            sessionStorage.clear();
             swal.fire("Logged Out","","success");
             this.props.history.push("/");
         }

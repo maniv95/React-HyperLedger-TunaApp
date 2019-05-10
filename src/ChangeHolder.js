@@ -16,12 +16,25 @@ class ChangeHolder extends Component {
         this.onKey = this.onKey.bind(this);
         this.onHolder = this.onHolder.bind(this);
         this.onChangeHolder = this.onChangeHolder.bind(this);
+        this.onCheck = this.onCheck.bind(this);
     }
     onKey(a){
         this.setState({key: a.target.value});
     }
     onHolder(b){
         this.setState({Holder:b.target.value});
+    }
+    componentDidMount(){
+        this.onCheck();
+    }
+    onCheck(){
+        if(sessionStorage.getItem('loggedin')){
+            console.log("session logged in");
+        }
+        else{
+            swal.fire("Please Login","","error");
+            this.props.history.push('/UserLogin');
+        }
     }
     onChangeHolder(){
         try{

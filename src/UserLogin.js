@@ -33,17 +33,19 @@ class UserLogin extends Component{
             })
             .then((res) => res.json())
             .then(data =>{
-                console.log(data);
+                // console.log(data);
                 if(data.code ==200){
-                    localStorage.setItem('user',data.user);
+                    sessionStorage.setItem('user',data.user);
+                    sessionStorage.setItem('loggedin',true);
                     swal.fire("Logged in As User","","success");
                     this.props.history.push('/HomePage');
                 }
                 else if(data.code==202){
-                    swal.fire("User Not Found","Please Check User","error");
+                    swal.fire("Please Enter User","","warning");
                 }
                 else if(data.code==400){
                     swal.fire("No User Found","Please Register User","error");
+                    this.props.history.push('/RegisterUser');
                 }
             })
         }
