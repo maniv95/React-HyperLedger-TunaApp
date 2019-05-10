@@ -8,6 +8,19 @@ class HomePage extends Component{
     constructor(props){
         super(props);
         this.onLogout= this.onLogout.bind(this);
+        this.onCheck=this.onCheck.bind(this);
+    }
+    componentDidMount(){
+        this.onCheck();
+    }
+    onCheck(){
+        if(sessionStorage.getItem('loggedin')){
+            console.log("session logged in");
+        }
+        else{
+            swal.fire("Please Login","","error");
+            this.props.history.push('/UserLogin');
+        }
     }
     onLogout(){
         try{
